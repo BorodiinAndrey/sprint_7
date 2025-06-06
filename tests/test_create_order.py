@@ -1,8 +1,7 @@
 import pytest
 import requests
 import allure
-from data.endpoints import CREATE_COURIER_URL, CREATE_ORDER_URL
-from helpers.courier_helper import register_new_courier_and_return_login_password
+from data.endpoints import CREATE_ORDER_URL
 
 
 @allure.feature('Проверка создания заказа')
@@ -39,4 +38,3 @@ class TestCreateOrder:
 
         with allure.step('Проверка, что в ответе присутствует Track'):
             assert 'track' in response.json(), 'Track отсутствует'
-
