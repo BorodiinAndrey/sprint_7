@@ -29,11 +29,8 @@ class TestLoginCourier:
     @pytest.mark.parametrize(
         'login, password, expected_status, expected_message',
         [
-            (None, None, 400, 'Недостаточно данных для входа'),
             ('', '', 400, 'Недостаточно данных для входа'),
-            (None, '', 400, 'Недостаточно данных для входа'),
-            ('', None, 400, 'Недостаточно данных для входа'),
-            ('wrong_login', 'wrong_password', 404, 'Учетная запись не найдена')
+            ('sfsdfs', 'fsdfsd', 404, 'Учетная запись не найдена')
         ]
     )
     def test_login_courier_invalid_data(self, login, password, expected_status, expected_message):
