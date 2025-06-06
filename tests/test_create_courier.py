@@ -38,14 +38,14 @@ class TestCreateCourier:
 
     @allure.title('Тест регистрации курьера с невалидными данными')
     @pytest.mark.parametrize(
-        'login, password',
+        'login, password, expected_status, expected_message',
         [
-            ('12345', ''),
-            ('', '12345'),
-            ('', '')
+            ('12345', '', 400, 'Недостаточно данных для создания учетной записи'),
+            ('', '12345', 400, 'Недостаточно данных для создания учетной записи'),
+            ('', '', 400, 'Недостаточно данных для создания учетной записи')
         ]
     )
-    def test_create_couriers_with_invalid_data(self, login, password):
+    def test_create_couriers_with_invalid_data(self, login, password, expected_status, expected_message):
         with allure.step('Формирование payload'):
             payload = {"login": login, "password": password}
         with allure.step(f'Регистрация курьера c payload {payload}'):
@@ -55,7 +55,5 @@ class TestCreateCourier:
             assert response.status_code == 400, f"Получили код: {response.status_code}"
 
         with allure.step('Проверка сообщения'):
-            expected_message = "Недостаточно данных для создания учетной записи"
             actual_message = response.json().get("message")
-
             assert actual_message == expected_message, f"Получили message: {actual_message}"
