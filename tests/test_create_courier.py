@@ -2,25 +2,20 @@ import pytest
 import requests
 import allure
 from data.endpoints import CREATE_COURIER_URL
-from helpers.courier_helper import register_new_courier_and_return_login_password
 
 
 @allure.feature('Проверка регистрации курьера')
 class TestCreateCourier:
 
     @allure.title('Тест регистрации курьера')
-    def test_create_courier_success(self):
-        with allure.step('Регистрация курьера'):
-            creds = register_new_courier_and_return_login_password()
+    def test_create_courier_success(self, courier):
         with allure.step('Проверка, что креды вернулись'):
-            assert creds, "Регистрация не осуществлена, вернулся пустой список и код 400"
+            assert courier, "Регистрация не осуществлена, вернулся пустой список и код 400"
 
     @allure.title('Тест регистрации курьеров с одинаковыми данными')
-    def test_create_same_couriers(self):
-        with allure.step('Регистрация курьера'):
-            creds = register_new_courier_and_return_login_password()
+    def test_create_same_couriers(self, courier):
         with allure.step('Возврат данных курьера в переменную'):
-            login, password, first_name = creds
+            login, password, first_name = courier
         with allure.step('Создание payload'):
             payload = {'login': login, 'password': password}
 

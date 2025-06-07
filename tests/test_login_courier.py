@@ -2,18 +2,15 @@ import pytest
 import requests
 import allure
 from data.endpoints import LOGIN_COURIER_URL
-from helpers.courier_helper import register_new_courier_and_return_login_password
 
 
 @allure.feature('Проверка авторизации курьера')
 class TestLoginCourier:
 
     @allure.title('Тест на авторизацию курьера')
-    def test_login_courier_success(self):
-        with allure.step('Регистрация курьера'):
-            creds = register_new_courier_and_return_login_password()
+    def test_login_courier_success(self, courier):
         with allure.step('Возврат данных курьера в переменную'):
-            login, password, first_name = creds
+            login, password, first_name = courier
         with allure.step('Создание payload'):
             payload = {'login': login, 'password': password}
         with allure.step('Авторизация курьера'):
